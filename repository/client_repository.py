@@ -2,17 +2,16 @@ import json
 import os
 from typing import List, Optional
 from domain.client import Client
+from dotenv import load_dotenv
 
+load_dotenv()
+DEFAULT_FILE = os.getenv("CLIENTS_FILE", "clients.json")
 
 class ClientRepository:
-    """
-    Repository layer for client data persistence.
-    Handles file-based storage operations using JSON format.
-    """
-
-    def __init__(self, file_path: str = "clients.json"):
-        self.file_path = file_path
+    def __init__(self, file_path: Optional[str] = None):
+        self.file_path = file_path or DEFAULT_FILE
         self._ensure_file_exists()
+
 
     def _ensure_file_exists(self) -> None:
         """Create the JSON file if it doesn't exist."""

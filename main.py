@@ -1,3 +1,5 @@
+import os
+import uvicorn
 from fastapi import FastAPI
 from datetime import datetime
 from controller.client_controller import client_router
@@ -37,13 +39,9 @@ async def root():
         "health": "/health"
     }
 
+HOST = os.getenv("HOST", "0.0.0.0")
+PORT = int(os.getenv("PORT", 8000))
+
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,
-        log_level="info"
-    )
+    uvicorn.run("main:app", host=HOST, port=PORT, reload=True)
