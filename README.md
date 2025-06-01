@@ -17,6 +17,7 @@ This project implements **Domain-Driven Design (DDD)** with clear separation of 
 ```
 client-api/
 ├── README.md
+├── .gitignore
 ├── requirements.txt
 ├── main.py                    # FastAPI application entry point
 ├── domain/
@@ -80,7 +81,7 @@ client-api/
 1. **Clone or download the project**
    ```bash
    # If using git
-   git clone <repository-url>
+   git clone https://github.com/belenfg/client-api.git
    cd client-api
    
    # Or extract the ZIP file and navigate to the folder

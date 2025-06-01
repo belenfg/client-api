@@ -1,0 +1,37 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+
+# macOS system files
+.DS_Store
+
+# Environments and settings
+.env
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Uvicorn reload files
+*.reload
+
+# Editors and IDEs
+.vscode/
+.idea/
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Test artifacts
+htmlcov/
+coverage/
+
+# pipenv
+Pipfile.lock
