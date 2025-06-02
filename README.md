@@ -16,25 +16,18 @@ This project implements **Domain-Driven Design (DDD)** with clear separation of 
 
 ```
 client-api/
-├── README.md
-├── .gitignore
-├── requirements.txt
-├── main.py                    # FastAPI application entry point
-├── domain/
-│   ├── __init__.py
-│   └── client.py             # Client domain model
-├── dto/
-│   ├── __init__.py
-│   └── client_dto.py         # Data Transfer Objects
-├── repository/
-│   ├── __init__.py
-│   └── client_repository.py  # Data persistence layer
-├── service/
-│   ├── __init__.py
-│   └── client_service.py     # Business logic layer
-└── controller/
-    ├── __init__.py
-    └── client_controller.py  # API endpoints
+├── README.md             # Project documentation
+├── .gitignore            # Git ignore rules
+├── .dockerignore         # Docker ignore rules
+├── Dockerfile            # Containerization instructions
+├── requirements.txt      # Python dependencies
+├── main.py               # FastAPI application entry point
+├── domain/               # Domain models (e.g., client.py)
+├── dto/                  # Data Transfer Objects (e.g., client_dto.py)
+├── repository/           # Data persistence layer (ClientRepository, etc.)
+├── service/              # Business logic layer (client_service.py)
+├── controller/           # API endpoints (FastAPI routers)
+└── tests/                # Unit and integration tests
 ```
 
 ## 🚀 Features
@@ -75,6 +68,8 @@ client-api/
 
 - Python 3.8 or higher
 - pip (Python package installer)
+- Docker (for containerization)
+
 
 ## 📦 Installation
 
@@ -103,6 +98,11 @@ client-api/
    pip install -r requirements.txt
    ```
 
+4. **Build the Docker image**
+   ```bash
+   docker build -t my-python-app:latest .
+   ```
+
 ## 🏃‍♂️ Running the Application
 
 1. **Start the development server**
@@ -120,6 +120,13 @@ client-api/
    - **Interactive Documentation**: http://localhost:8000/docs
    - **Alternative Documentation**: http://localhost:8000/redoc
    - **Health Check**: http://localhost:8000/health
+   
+3. **Running with Docker**
+   - If you have already built the Docker image (my-python-app:latest), run:
+   ```bash
+   docker run --rm -d -p 8000:8000 --name client-api-container my-python-app:latest
+   ```
+
 
 ## 📝 Usage Examples
 
@@ -178,6 +185,43 @@ You can modify the following settings in the respective files:
 1. **Using Swagger UI**: Navigate to http://localhost:8000/docs for interactive testing
 2. **Using curl**: Use the examples provided above
 3. **Using Postman**: Import the API endpoints using the OpenAPI specification available at http://localhost:8000/openapi.json
+
+
+## 🧪 Testing the API
+
+1. **Using Swagger UI**  
+   Navigate to http://localhost:8000/docs for interactive testing.
+2. **Using curl**  
+   Use the examples provided above to exercise your endpoints from the command line.
+3. **Using Postman**  
+   Import the API endpoints via the OpenAPI specification at http://localhost:8000/openapi.json.
+
+### 🧩 Running Tests with pytest Locally
+
+Execute all unit and integration tests with pytest:
+
+```bash
+pytest --maxfail=1 --disable-warnings -q
+```
+
+## 🐳 Running Tests via Docker
+
+Once you have built the Docker image (`my-python-app:latest`), run:
+
+```bash
+docker run --rm \
+  -v "$(pwd)":/app \
+  -w /app \
+  my-python-app:latest \
+  pytest --maxfail=1 -q
+```
+
+* `-v "$(pwd)":/app` mounts your local project (including `tests/`) into `/app` inside the container.
+* `-w /app` sets `/app` as the working directory before running pytest.
+* `--rm` removes the container after tests complete.
+
+This command allows the container to use the pre-installed dependencies to execute pytest in isolation within Docker.
+
 
 ## 🚨 Error Handling
 
