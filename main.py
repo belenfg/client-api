@@ -3,6 +3,10 @@ import uvicorn
 from fastapi import FastAPI
 from datetime import datetime
 from controller.client_controller import client_router
+from logging_config import configure_logging
+
+#logger setup
+configure_logging()
 
 # FastAPI application setup
 app = FastAPI(
@@ -44,4 +48,4 @@ PORT = int(os.getenv("PORT", 8000))
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host=HOST, port=PORT, reload=True)
+    uvicorn.run("main:app", host=HOST, port=PORT, reload=True, log_level="info")

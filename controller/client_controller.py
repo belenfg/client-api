@@ -1,3 +1,4 @@
+import logging
 from fastapi import APIRouter, HTTPException, Depends
 from typing import List
 from dto.client_dto import ClientCreateRequest, ClientUpdateRequest, ClientResponse
@@ -19,6 +20,8 @@ def get_client_service(repository: ClientRepository = Depends(get_client_reposit
 # Router setup
 client_router = APIRouter(prefix="/clients", tags=["clients"])
 
+logger = logging.getLogger(__name__)
+
 
 @client_router.get("", response_model=List[ClientResponse])
 async def get_clients(service: ClientService = Depends(get_client_service)):
@@ -37,8 +40,10 @@ async def get_client(client_id: str, service: ClientService = Depends(get_client
         client = service.get_client_by_id(client_id)
         return ClientResponse(**client.to_dict())
     except ValueError as e:
+        logger.warning(f"Client not found: {client_id}")
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
+        logger.error(f"Error trying to retrieve client {client_id}: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 
